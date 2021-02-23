@@ -4,11 +4,12 @@ import time
 
 score = 0
 high_score = 5
+delay = 0.1
 
 s = turtle.Screen()
 s.setup(width=1000, height=1000)
 s.title("Snake Game")
-
+#s.tracer(0)
 
 turtle.bgcolor("black")
 turtle.color("orange")
@@ -32,12 +33,15 @@ sm.fillcolor('blue')
 sm.turtlesize(1.5)
 
 snake = turtle.Turtle()
-snake.speed(1)
+snake.speed(0)
 snake.color("green")
 snake.turtlesize(1)
 snake.shape("circle")
 snake.penup()
 snake.goto(0, 0)
+snake.direction = 'stop'
+
+
 
 fruit = turtle.Turtle()
 fruit.speed(0)
@@ -48,209 +52,53 @@ fruit.penup()
 fruit.goto(0, 100)
 
 score_ = turtle.Turtle()
+score_.speed(0)
 score_.color("white")
 score_.penup()
 score_.hideturtle()
 score_.goto(0, 400)
 score_.write("Score : {} High Score: {}".format(score, high_score), align='center', font=('candara', 15, 'bold'))
 
-commands = turtle.Turtle()
-commands.color("white")
-commands.penup()
-commands.hideturtle()
-commands.goto(-400, 450)
-commands.write("\'w\' to reset snake\n\'e\' to close window\narrows keys to move snake", align='left', font=('candara', 10, 'bold'))
-
-base = 0
-
-
-def move():
-
-    while base == 0:
-        time.sleep(1)
-        snake.goto(0, 0)
-    while base == 3:
-        global score
-        score = 0
-        score_.clear()
-        score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                     font=('candara', 15, 'bold'))
-        time.sleep(1)
-        snake.goto(0, 0)
-
-    while base == -1:
-        def left():
-            x = snake.xcor()
-            snake.setx(x - 10)
-            global score
-            global high_score
-            if snake.distance(fruit) < 20:
-                x = random.randint(0, 350)
-                y = random.randint(0, 350)
-                fruit.goto(x, y)
-
-
-                score += 1
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                if score > high_score:
-                    high_score = score
-                    print(high_score)
-                    score_.clear()
-                    score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                                 font=('candara', 15, 'bold'))
-            if snake.xcor() < -400 or snake.xcor() > 400 or snake.ycor() < -400 or snake.ycor() > 400:
-                score = 0
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                time.sleep(1)
-                snake.goto(0, 0)
-                global base
-                base = 0
-                return base
-
-
-        left()
-    while base == 1:
-        # print(base, "where am i")
-        def right():
-            x = snake.xcor()
-            snake.setx(x + 10)
-            global score
-            global high_score
-            if snake.distance(fruit) < 20:
-                x = random.randint(0, 350)
-                y = random.randint(0, 350)
-                fruit.goto(x, y)
-
-
-                score += 1
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                if score > high_score:
-                    high_score = score
-                    print(high_score)
-                    score_.clear()
-                    score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                                 font=('candara', 15, 'bold'))
-            if snake.xcor() < -400 or snake.xcor() > 400 or snake.ycor() < -400 or snake.ycor() > 400:
-                score = 0
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                time.sleep(1)
-                snake.goto(0, 0)
-                global base
-                base = 0
-                return base
-
-        right()
-    while base == -2:
-        def down():
-            y = snake.ycor()
-            snake.sety(y - 10)
-            global score
-            global high_score
-            if snake.distance(fruit) < 20:
-                x = random.randint(0, 350)
-                y = random.randint(0, 350)
-                fruit.goto(x, y)
-
-
-                score += 1
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                if score > high_score:
-                    high_score = score
-                    print(high_score)
-                    score_.clear()
-                    score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                                 font=('candara', 15, 'bold'))
-            if snake.xcor() < -400 or snake.xcor() > 400 or snake.ycor() < -400 or snake.ycor() > 400:
-                score = 0
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                time.sleep(1)
-                snake.goto(0, 0)
-                global base
-                base = 0
-                return base
-
-        down()
-    while base == 2:
-        def up():
-            y = snake.ycor()
-            snake.sety(y + 10)
-            global score
-            global high_score
-            if snake.distance(fruit) < 20:
-                x = random.randint(0, 350)
-                y = random.randint(0, 350)
-                fruit.goto(x, y)
-                
-                score += 1
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                if score > high_score:
-                    high_score = score
-                    print(high_score)
-                    score_.clear()
-                    score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                                     font=('candara', 15, 'bold'))
-            if snake.xcor() < -400 or snake.xcor() > 400 or snake.ycor() < -400 or snake.ycor() > 400:
-                score = 0
-                score_.clear()
-                score_.write("Score : {} High Score: {}".format(score, high_score), align='center',
-                             font=('candara', 15, 'bold'))
-                time.sleep(1)
-                snake.goto(0, 0)
-                global base
-                base = 0
-                return base
-        up()
-def go_left():
-    global base
-    base = -1
-    move()
-def go_right():
-    global base
-    base = 1
-    move()
-def go_down():
-    global base
-    base = -2
-    move()
 
 def go_up():
-    global base
-    base = 2
-    move()
-def reset_():
-    global base
-    base = 3
-    move()
-def done_():
-    s.bye()
+    if snake.direction != 'Down':
+        snake.direction = 'Up'
+        print('what')
+def go_down():
+    if snake.direction != 'Up':
+        snake.direction = 'Down'
+
+def go_right():
+    if snake.direction != 'Left':
+        snake.direction = 'Right'
+
+def go_left():
+    if snake.direction != 'Right':
+        snake.direction = 'Left'
+
+def move():
+    if snake.direction == 'Up':
+        y = snake.ycor()
+        snake.sety(y + 15)
+    if snake.direction == 'Down':
+        y = snake.ycor()
+        snake.sety(y - 15)
+    if snake.direction == 'Right':
+        x = snake.xcor()
+        snake.setx(x + 15)
+    if snake.direction == 'Left':
+        x = snake.xcor()
+        snake.setx(x - 15)
+
 
 s.listen()
-s.onkeypress(go_up, 'Up')
-s.onkeypress(go_down, 'Down')
-s.onkeypress(go_left, 'Left')
-s.onkeypress(go_right, 'Right')
-s.onkeypress(reset_, 'w')
-s.onkeypress(done_, 'e')
+s.onkeypress(go_up, 'w')
+s.onkeypress(go_down, 's')
+s.onkeypress(go_left, 'a')
+s.onkeypress(go_right, 'd')
 
 
-
-s.update()
-
-if (snake.xcor() < -397):
-    print('lose')
 move()
+
+
 s.mainloop()
