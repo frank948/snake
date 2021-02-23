@@ -2,172 +2,182 @@ import random
 import turtle
 import time
 
-score = 0
-high_score = 0
+score = 1
+high_score = 2
 
-def setup():
+s = turtle.Screen()
+s.setup(width=1000, height=1000)
+s.title("Snake Game")
 
-    s = turtle.Screen()
-    s.setup(width=1000, height=1000)
-    s.title("Snake Game")
 
-    turtle.bgcolor("black")
-    turtle.color("orange")
-    turtle.shape("square")
-    turtle.speed(0)
-    turtle.penup()
-    turtle.goto(-400, 400)
-    turtle.pendown()
-    turtle.pensize(5)
-    turtle.fd(800)
-    turtle.rt(90)
-    turtle.fd(800)
-    turtle.rt(90)
-    turtle.fd(800)
-    turtle.rt(90)
-    turtle.fd(800)
+turtle.bgcolor("black")
+turtle.color("orange")
+turtle.shape("square")
+turtle.speed(0)
+turtle.penup()
+turtle.goto(-400, 400)
+turtle.pendown()
+turtle.pensize(5)
+turtle.fd(800)
+turtle.rt(90)
+turtle.fd(800)
+turtle.rt(90)
+turtle.fd(800)
+turtle.rt(90)
+turtle.fd(800)
 
-    snake = turtle.Turtle()
-    snake.speed(1)
-    snake.color("green")
-    snake.pensize(5)
-    snake.shape("square")
-    snake.penup()
-    snake.goto(0, 0)
+sm = turtle.Turtle()
+sm.shape('circle')
+sm.fillcolor('blue')
+sm.turtlesize(1.5)
 
-    fruit = turtle.Turtle()
-    fruit.speed(0)
-    fruit.color("red")
-    fruit.pensize(5)
-    fruit.shape("circle")
-    fruit.penup()
-    fruit.goto(0, 100)
+snake = turtle.Turtle()
+snake.speed(1)
+snake.color("green")
+snake.turtlesize(1)
+snake.shape("circle")
+snake.penup()
+snake.goto(0, 0)
 
-    score_ = turtle.Turtle()
-    score_.color("white")
-    score_.penup()
-    score_.hideturtle()
-    score_.goto(0, 400)
-    score_.write("Score : 0 High Score: 0", align='center', font=('candara', 15, 'bold'))
+fruit = turtle.Turtle()
+fruit.speed(0)
+fruit.color("red")
+fruit.pensize(5)
+fruit.shape("circle")
+fruit.penup()
+fruit.goto(0, 100)
 
-    base = 0
+score_ = turtle.Turtle()
+score_.color("white")
+score_.penup()
+score_.hideturtle()
+score_.goto(0, 400)
+score_.write("Score : {} High Score: {}".format(score, high_score), align='center', font=('candara', 15, 'bold'))
 
-    def move():
-        #print('working')
-        while base == -1:
-            #print(base, "where am i")
-            def left():
-                x = snake.xcor()
-                snake.setx(x - 10)
-                #print((snake.xcor()), (snake.ycor()))
-                #print(base)
-                #print('left')
-            left()
-        while base == 1:
-            #print(base, "where am i")
-            def right():
-                x = snake.xcor()
-                snake.setx(x + 10)
-                #print(base)
-                #print('right')
-            right()
-        while base == -2:
-            #print(base, "where am i")
-            def down():
-                y = snake.ycor()
-                snake.sety(y - 10)
-                #print(base)
-                #print('down')
-            down()
-        while base == 2:
-            #print(base, "where am i")
-            def up():
-                y = snake.ycor()
-                snake.sety(y + 10)
-                #print(base)
-                #print('up')
-            up()
-        if base == 3:
-            def stop():
-                #time.sleep(1)
-                snake.speed(1)
-                s.done()
-                print('done')
-                print((snake.xcor()), (snake.ycor()))
-            stop()
-        if base == 4:
-            def reset():
-                snake.speed(0)
-                setup()
-                print('reset')
-            reset()
+commands = turtle.Turtle()
+commands.color("white")
+commands.penup()
+commands.hideturtle()
+commands.goto(-400, 450)
+commands.write("\'w\' to reset snake\n\'e\' to close window\narrows keys to move snake", align='left', font=('candara', 10, 'bold'))
 
-    def go_left():
-        global base
-        base = -1
-        #print(base, 'left')
-        move()
-        return base
-    def go_right():
-        global base
-        base = 1
-        #print(base, 'right')
-        move()
-        return base
-    def go_down():
-        global base
-        base = -2
-        #print(base, 'down')
-        move()
-        return base
-    def go_up():
-        global base
-        base = 2
-        #print(base, 'up')
-        move()
-        return base
-    def stop_():
-        global base
-        base = 3
-        move()
-        return base
-    def reset_():
-        global base
-        base = 4
-        move()
-        return base
+base = 0
 
-    s.listen()
-    s.onkeypress(go_up, 'Up')
-    s.onkeypress(go_down, 'Down')
-    s.onkeypress(go_left, 'Left')
-    s.onkeypress(go_right, 'Right')
-    s.onkeypress(stop_, 'w')
-    s.onkeypress(reset_, 'e')
 
-    s.update()
-    if (snake.xcor() < -397):
-        x = snake.xcor()
-        y = snake.ycor()
-        snake.goto(x, y)
-        print(snake.position)
+def move():
 
-        #snake.goto(0, 0)
-        #snake.direction = "stop"
-        #score = 0
-        #delay = 0.1
-        #score_.clear()
-        #score_.write("Score: {} High Score: {}".format(score, high_score), align='center', font=('candara', 14, 'bold'))
-    '''
-        if snake.distance(fruit) < 20:
-            score += 1
-            x = random.randint(-250, 250)
-            y = random.randint(-250, 250)
-            x_1 = snake.xcor()
-            y_1 = snake.ycor()
-            fruit.goto(x, y)
-            c = snake.clone()
-    '''
+    while base == 3:
+        time.sleep(1)
+        snake.goto(0, 0)
+
+    # print('working')
+
+    while base == -1:
+        # print(base, "where am i")
+        def left():
+            x = snake.xcor()
+            snake.setx(x - 10)
+            if snake.distance(fruit) < 20:
+                x = random.randint(0, 200)
+                y = random.randint(0, 200)
+                fruit.goto(x, y)
+            # print((snake.xcor()), (snake.ycor()))
+            # print(base)
+            # print('left')
+        left()
+    while base == 1:
+        # print(base, "where am i")
+        def right():
+            x = snake.xcor()
+            snake.setx(x + 10)
+            if snake.distance(fruit) < 20:
+                x = random.randint(0, 200)
+                y = random.randint(0, 200)
+                fruit.goto(x, y)
+            # print(base)
+            # print((snake.xcor()), (snake.ycor()))
+            # print('right')
+        right()
+    while base == -2:
+        # print(base, "where am i")
+        def down():
+            y = snake.ycor()
+            snake.sety(y - 10)
+            if snake.distance(fruit) < 20:
+                x = random.randint(0, 200)
+                y = random.randint(0, 200)
+                fruit.goto(x, y)
+
+            # print(base)
+            # print((snake.xcor()), (snake.ycor()))
+            # print('down')
+        down()
+    while base == 2:
+        # print(base, "where am i")
+        def up():
+            y = snake.ycor()
+            snake.sety(y + 10)
+            if snake.distance(fruit) < 20:
+                x = random.randint(0, 200)
+                y = random.randint(0, 200)
+                fruit.goto(x, y)
+            # print(base)
+            # print((snake.xcor()), (snake.ycor()))
+            # print('up')
+        up()
+
+def go_left():
+    global base
+    base = -1
+    # print(base, 'left')
     move()
-    s.mainloop()
-setup()
+
+def go_right():
+    global base
+    base = 1
+    # print(base, 'right')
+    move()
+
+def go_down():
+    global base
+    base = -2
+    # print(base, 'down')
+    move()
+
+def go_up():
+    global base
+    base = 2
+    # print(base, 'up')
+    move()
+
+def reset_():
+    global base
+    base = 3
+    move()
+
+def done_():
+    s.bye()
+
+
+s.listen()
+s.onkeypress(go_up, 'Up')
+s.onkeypress(go_down, 'Down')
+s.onkeypress(go_left, 'Left')
+s.onkeypress(go_right, 'Right')
+s.onkeypress(reset_, 'w')
+s.onkeypress(done_, 'e')
+
+
+
+s.update()
+print('where is this')
+if (snake.xcor() < -397):
+    print('lose')
+
+if snake.distance(fruit) < 50:
+    print('where')
+
+
+move()
+
+s.mainloop()
